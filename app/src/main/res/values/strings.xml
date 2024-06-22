@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Dental Care Quiz</string>
+    <string name="start_quiz">Start quiz</string>
+    <string name="view_records">View Records</string>
+    <string name="insideandroid">© InsideAndroid.in</string>
+    <string name="patient_details_title">New Patient Details</string>
+    <string name="enter_details">Enter details:</string>
+    <string name="name_of_patient">Name of patient</string>
+    <string name="phone_number">Phone number</string>
+    <string name="country_code">+91</string>
+    <string name="select_date_of_birth">Select date of birth:</string>
+    <string name="continue_str">Continue</string>
+    <string name="quiz">Quiz</string>
+    <string name="answer_all_questions">Answer all questions: %d</string>
+    <string name="quiz_recorded_successfully">Quiz recorded successfully</string>
+    <string name="save_record">Save record</string>
+    <string name="next">Next</string>
+    <string name="records">Records</string>
+    <string name="total_results">Total results: %1$s</string>
+    <string name="success_file_exported_successfully">Success! File exported successfully!</string>
+    <string name="failed_something_went_wrong">Failed! Something went wrong.</string>
+    <string name="record_saved_successfully">Record saved successfully!</string>
+    <string name="score">Score: %1$s</string>
+    <string name="result">Result: %1$s</string>
+    <string name="home">Home</string>
+    <string name="view_all_records">View all records</string>
+    <string name="visit_website">Visit website</string>
+    <string name="report_title">Difficulty Index Of Management Of Full Mouth Rehabilitation with Implants</string>
+    <string name="dentist_name">Dr. Shenila Qureshi</string>
+</resources>
