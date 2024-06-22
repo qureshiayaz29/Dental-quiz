@@ -21,12 +21,12 @@ This project provides dentists with a user-friendly android app to assess the di
 
 | Section        | Screenshot                                              |
 |----------------|-------------------------------------------------------|
-| Home Screen            | <img src="./screenshot/home.png" width="400"> |
-| New Patient Entry      | <img src="./screenshot/new_entry.png" width="400"> |
-| Quiz      | <img src="./screenshot/quiz.png" width="400"> |
-| Records      | <img src="./screenshot/records.png" width="400"> |
-| Report      | <img src="./screenshot/report.png" width="400"> |
-| Success      | <img src="./screenshot/success.png" width="400"> |
+| Home Screen            | <img src="./screenshot/home.png" width="250"> |
+| New Patient Entry      | <img src="./screenshot/new_entry.png" width="250"> |
+| Quiz      | <img src="./screenshot/quiz.png" width="250"> |
+| Records      | <img src="./screenshot/records.png" width="250"> |
+| Report      | <img src="./screenshot/report.png" width="250"> |
+| Success      | <img src="./screenshot/success.png" width="250"> |
 
 **Technologies:**
 
@@ -58,4 +58,4 @@ We encourage contributions to this project. Feel free to fork the repository, ma
 
 **License:**
 
-This project is licensed under the [MIT LICENSE] license.
+This project is licensed under the MIT LICENSE.
