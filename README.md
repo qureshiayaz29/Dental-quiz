@@ -11,22 +11,23 @@ This project provides dentists with a user-friendly android app to assess the di
 
 * **Quiz-based assessment:** Dentists can enter basic patient details and answer a series of 20 questions to determine the difficulty index.
 * **Scoring system:** Each quiz answer is assigned points, and the final score is calculated to provide a difficulty level:
-    * 0-15 points: Very Easy
-    * 16-30 points: Easy
-    * 31-45 points: Difficult
-    * 46-60 points: Very Difficult
+
+|Point        | Result                                              |
+|--------------|------------------------------------------------------|
+| 0-15 points | Very Easy |
+| 16-30 points | Easy |
+| 31-45 points | Difficult |
+| 46-60 points | Very Difficult |
+
 * **PDF report generation:** Upon quiz completion, a PDF report is generated and saved locally. This report includes all answers and the final difficulty assessment.
 
 **Screenshots:**
 
-| Section        | Screenshot                                              |
-|----------------|-------------------------------------------------------|
-| Home Screen            | <img src="./screenshot/home.png" width="250"> |
-| New Patient Entry      | <img src="./screenshot/new_entry.png" width="250"> |
-| Quiz      | <img src="./screenshot/quiz.png" width="250"> |
-| Records      | <img src="./screenshot/records.png" width="250"> |
-| Report      | <img src="./screenshot/report.png" width="250"> |
-| Success      | <img src="./screenshot/success.png" width="250"> |
+| Section        | Screenshot                                              | Section        | Screenshot                                              | 
+|----------------|-------------------------------------------------------|----------------|-------------------------------------------------------|
+| Home Screen            | <img src="./screenshot/home.png" width="250"> | New Patient Entry      | <img src="./screenshot/new_entry.png" width="250"> |
+| Quiz      | <img src="./screenshot/quiz.png" width="250"> | Records      | <img src="./screenshot/records.png" width="250"> |
+| Success      | <img src="./screenshot/success.png" width="250"> | Report      | <img src="./screenshot/report.png" width="250"> |
 
 **Technologies:**
 
