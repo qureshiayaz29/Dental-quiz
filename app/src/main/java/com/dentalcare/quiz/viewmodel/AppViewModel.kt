@@ -7,11 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.dentalcare.quiz.analytics.Analytics
 import com.dentalcare.quiz.model.Answer
 import com.dentalcare.quiz.model.FileSaveResponse
+import com.dentalcare.quiz.model.PatientData
 import com.dentalcare.quiz.model.QuizResult
 import com.dentalcare.quiz.util.addDivider
 import com.dentalcare.quiz.util.addEmptyLine
 import com.dentalcare.quiz.util.addImage
-import com.dentalcare.quiz.util.addSubHeading
+import com.dentalcare.quiz.util.addSubTitle
 import com.dentalcare.quiz.util.addText
 import com.dentalcare.quiz.util.addTitle
 import com.dentalcare.quiz.util.formatDate
@@ -32,29 +33,40 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 class AppViewModel : ViewModel() {
+    var patientData: PatientData? = null
 
     fun insertQuizResult(
-        name: String,
-        number: String,
-        dob: Long,
         quizAnswers: Map<Int, Int>,
-        onResultSaved: (Pair<Int, String>) -> Unit
+        onGetResult: (Pair<Int, String>?) -> Unit,
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             val answers = mutableListOf<Answer>()
             quizAnswers.forEach { (quesNo, answer) ->
                 answers.add(Answer(quesNo, answer))
             }
-            val quizResult = QuizResult(
-                name = name,
-                number = number,
-                dob = dob,
-                dateOfEntry = System.currentTimeMillis(),
-                answers = Gson().toJson(answers).toString()
-            )
-            quizResult.save()
-            withContext(Dispatchers.Main) {
-                onResultSaved.invoke(quizResult.getMarksAchieved())
+            patientData?.let {
+                val quizResult =
+                    QuizResult(
+                        name = it.name,
+                        number = it.number,
+                        age = it.age,
+                        gender = it.gender,
+                        occupation = it.occupation,
+                        address = it.address,
+                        dob = it.dob,
+                        dateOfEntry = System.currentTimeMillis(),
+                        answers = Gson().toJson(answers).toString(),
+                    )
+                quizResult.save()
+                withContext(Dispatchers.Main) {
+                    // success case
+                    onGetResult.invoke(quizResult.getMarksAchieved())
+                }
+            } ?: run {
+                withContext(Dispatchers.Main) {
+                    // failure case
+                    onGetResult.invoke(null)
+                }
             }
         }
     }
@@ -73,8 +85,9 @@ class AppViewModel : ViewModel() {
         quizResult: QuizResult,
         logo: Drawable?,
         title: String,
+        title2: String,
         subtitle: String,
-        onFileSaveCompleted: (FileSaveResponse, String) -> Unit
+        onFileSaveCompleted: (FileSaveResponse, String) -> Unit,
     ) {
         viewModelScope.launch {
             val folder =
@@ -84,7 +97,10 @@ class AppViewModel : ViewModel() {
                     mkdir()
                 }
             }
-            val pdfFilePath = folder + "${quizResult.name?.replace(" ", "-")?.trim()}-${getFileName(quizResult.dateOfEntry)}"
+            val pdfFilePath =
+                folder + "${
+                    quizResult.name?.replace(" ", "-")?.trim()
+                }-${getFileName(quizResult.dateOfEntry)}"
             runCatching {
                 val pdfFile = File(pdfFilePath)
                 if (pdfFile.exists()) {
@@ -98,13 +114,18 @@ class AppViewModel : ViewModel() {
                 with(layoutDocument) {
                     addImage(logo, true)
                     addTitle(title)
-                    addSubHeading(subtitle)
+                    addSubTitle(title2)
+                    addSubTitle(subtitle)
                     addEmptyLine()
+                    addText("Patient Details:", isUnderline = true)
                     addText(
-                        "Patient Details: \n" +
-                                "Name: ${quizResult.name}\n" +
-                                "Number: ${quizResult.number}\n" +
-                                "DOB: ${formatDate(quizResult.dob ?: 0)}"
+                        "Name: ${quizResult.name}\n" +
+                            "Number: ${quizResult.number}\n" +
+                            "DOB: ${formatDate(quizResult.dob ?: 0)}\n" +
+                            "Age: ${quizResult.age}\n" +
+                            "Gender: ${quizResult.gender}\n" +
+                            "Occupation: ${quizResult.occupation}\n" +
+                            "Address: ${quizResult.address}",
                     )
                     addEmptyLine()
                     addDivider()
@@ -143,7 +164,10 @@ class AppViewModel : ViewModel() {
     fun getErrorIfAny(
         name: String,
         number: String,
-        dob: Long?
+        age: String,
+        occupation: String,
+        address: String,
+        dob: Long?,
     ): String? {
         val pattern: Pattern = Pattern.compile("[^A-Za-z ]")
         val matcher: Matcher = pattern.matcher(name)
@@ -154,6 +178,14 @@ class AppViewModel : ViewModel() {
             "Invalid name"
         } else if (number.isEmpty()) {
             "Enter phone number"
+        } else if (age.isEmpty()) {
+            "Enter age"
+        } else if (age.toInt() > 99) {
+            "Enter age between [0 to 99]"
+        } else if (occupation.isEmpty()) {
+            "Enter occupation"
+        } else if (address.isEmpty()) {
+            "Enter address"
         } else if (dob == null) {
             "Select date of birth"
         } else {
@@ -161,8 +193,11 @@ class AppViewModel : ViewModel() {
         }
     }
 
-    fun getMissingAnswer(quesAnswered: MutableSet<Int>, numOfQues: Int): Int {
-        val allQuestions = (1 .. numOfQues).toList()
+    fun getMissingAnswer(
+        quesAnswered: MutableSet<Int>,
+        numOfQues: Int,
+    ): Int {
+        val allQuestions = (1..numOfQues).toList()
         return allQuestions.minus(quesAnswered.toList().toSet()).first()
     }
 }

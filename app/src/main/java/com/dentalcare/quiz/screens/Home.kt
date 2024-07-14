@@ -49,7 +49,7 @@ fun Home(
                     Button(onClick = {
                         navController.navigate(PatientDetails)
                     }) {
-                        Text(text = stringResource(R.string.start_quiz))
+                        Text(text = stringResource(R.string.start_analysis))
                     }
                     Button(onClick = {
                         navController.navigate(Records)
@@ -59,7 +59,7 @@ fun Home(
                 }
 
                 Text(
-                    text = stringResource(R.string.insideandroid),
+                    text = stringResource(R.string.developed_by_university),
                     modifier = Modifier.align(Alignment.BottomCenter)
                 )
             }

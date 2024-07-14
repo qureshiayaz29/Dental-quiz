@@ -1,8 +1,7 @@
 <resources>
-    <string name="app_name">Dental Care Quiz</string>
-    <string name="start_quiz">Start quiz</string>
+    <string name="app_name">Implant Difficulty Scale</string>
+    <string name="start_analysis">Start analysis</string>
     <string name="view_records">View Records</string>
-    <string name="insideandroid">© InsideAndroid.in</string>
     <string name="patient_details_title">New Patient Details</string>
     <string name="enter_details">Enter details:</string>
     <string name="name_of_patient">Name of patient</string>
@@ -10,9 +9,10 @@
     <string name="country_code">+91</string>
     <string name="select_date_of_birth">Select date of birth:</string>
     <string name="continue_str">Continue</string>
-    <string name="quiz">Quiz</string>
+    <string name="analysis">Analysis</string>
     <string name="answer_all_questions">Answer all questions: %d</string>
-    <string name="quiz_recorded_successfully">Quiz recorded successfully</string>
+    <string name="analysis_recorded_successfully">Analysis recorded successfully</string>
+    <string name="analysis_failed">Failed to record analysis</string>
     <string name="save_record">Save record</string>
     <string name="next">Next</string>
     <string name="records">Records</string>
@@ -27,4 +27,11 @@
     <string name="visit_website">Visit website</string>
     <string name="report_title">Difficulty Index Of Management Of Full Mouth Rehabilitation with Implants</string>
     <string name="dentist_name">Dr. Shenila Qureshi</string>
+    <string name="age">Age</string>
+    <string name="address">Address</string>
+    <string name="occupation">Occupation</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="developed_by_university">Developed by: Malwanchal University</string>
+    <string name="analyse_patient">Implant Analysis</string>
 </resources>

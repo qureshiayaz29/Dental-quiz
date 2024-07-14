@@ -9,11 +9,7 @@ object Home
 object PatientDetails
 
 @Serializable
-data class Quiz(
-    val name: String,
-    val number: String,
-    val dob: Long,
-)
+object Quiz
 
 @Serializable
 object Records

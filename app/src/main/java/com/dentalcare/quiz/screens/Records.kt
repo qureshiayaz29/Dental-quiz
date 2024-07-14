@@ -34,7 +34,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -50,9 +49,9 @@ import com.dentalcare.quiz.viewmodel.AppViewModel
 @ExperimentalMaterial3Api
 @Composable
 fun Records(
-    navController: NavController
+    navController: NavController,
+    viewModel: AppViewModel
 ) {
-    val viewModel = viewModel<AppViewModel>()
     val context = LocalContext.current
     val records = viewModel.getAllRecords()
 
@@ -102,6 +101,7 @@ fun Records(
                                     quizResult = it,
                                     logo = getIcon(context, R.drawable.logo),
                                     title = context.getString(R.string.report_title),
+                                    title2 = context.getString(R.string.developed_by_university),
                                     subtitle = context.getString(R.string.dentist_name)
                                 ) { response, filePath ->
                                     showResult(context, response, filePath)

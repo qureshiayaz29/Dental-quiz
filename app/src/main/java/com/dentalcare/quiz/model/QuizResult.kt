@@ -10,6 +10,10 @@ import java.io.Serializable
 data class QuizResult(
     val name: String? = null,
     val number: String? = null,
+    val age: Int? = null,
+    val gender: String? = null,
+    val occupation: String? = null,
+    val address: String? = null,
     val dob: Long? = null,
     val dateOfEntry: Long? = null,
     val answers: String? = null

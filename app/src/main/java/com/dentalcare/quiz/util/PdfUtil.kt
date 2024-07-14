@@ -15,26 +15,32 @@ import com.itextpdf.layout.property.HorizontalAlignment
 import com.itextpdf.layout.property.TextAlignment
 import java.io.ByteArrayOutputStream
 
-
 fun Document.addTitle(text: String) {
     add(
-        Paragraph(text).setBold().setUnderline()
-            .setTextAlignment(TextAlignment.CENTER)
+        Paragraph(text)
+            .setBold()
+            .setUnderline()
+            .setTextAlignment(TextAlignment.CENTER),
     )
 }
 
-fun Document.addSubHeading(text: String) {
-    add(
-        Paragraph(text).setBold()
-            .setTextAlignment(TextAlignment.CENTER)
-    )
-}
-
-fun Document.addText(text: String) {
+fun Document.addSubTitle(text: String) {
     add(
         Paragraph(text)
-            .setTextAlignment(TextAlignment.LEFT)
+            .setBold()
+            .setTextAlignment(TextAlignment.CENTER),
     )
+}
+
+fun Document.addText(
+    text: String,
+    isUnderline: Boolean = false,
+) {
+    val paragraph = Paragraph(text).setTextAlignment(TextAlignment.LEFT)
+    if (isUnderline) {
+        paragraph.setUnderline()
+    }
+    add(paragraph)
 }
 
 fun Document.addDivider(isDotted: Boolean = false) {
@@ -44,12 +50,15 @@ fun Document.addDivider(isDotted: Boolean = false) {
                 DottedLine()
             } else {
                 SolidLine()
-            }
-        )
+            },
+        ),
     )
 }
 
-fun Document.addTextWithIcon(text: String, icon: Drawable?) {
+fun Document.addTextWithIcon(
+    text: String,
+    icon: Drawable?,
+) {
     // prepare icon
     val bmp = (icon as BitmapDrawable).bitmap
     val stream = ByteArrayOutputStream()
@@ -72,7 +81,10 @@ fun Document.addEmptyLine(number: Int = 1) {
     }
 }
 
-fun Document.addImage(drawable: Drawable?, isCenterAligned: Boolean = false) {
+fun Document.addImage(
+    drawable: Drawable?,
+    isCenterAligned: Boolean = false,
+) {
     val bmp = (drawable as BitmapDrawable).bitmap
     val stream = ByteArrayOutputStream()
     bmp.compress(Bitmap.CompressFormat.PNG, 100, stream)

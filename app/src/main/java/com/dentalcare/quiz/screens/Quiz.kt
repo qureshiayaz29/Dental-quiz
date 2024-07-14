@@ -28,7 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.dentalcare.quiz.R
 import com.dentalcare.quiz.router.Quiz
@@ -41,9 +40,7 @@ import com.dentalcare.quiz.viewmodel.AppViewModel
 @Composable
 fun Quiz(
     navController: NavController,
-    name: String,
-    number: String,
-    dob: Long,
+    viewModel: AppViewModel
 ) {
     val context = LocalContext.current
     val quizResult = remember { mutableStateMapOf<Int, Int>() }
@@ -52,44 +49,45 @@ fun Quiz(
     var progress by remember { mutableFloatStateOf(unit) }
     val currentCount = (progress * numOfQues).toInt()
     val question = getQuestion(currentCount)
-    val viewModel = viewModel<AppViewModel>()
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = stringResource(R.string.quiz)) },
+                title = { Text(text = stringResource(R.string.analysis)) },
                 navigationIcon = {
                     IconButton(onClick = {
                         navController.popBackStack()
                     }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "back"
+                            contentDescription = "back",
                         )
                     }
-                }
+                },
             )
         },
         content = { paddingValues ->
             Column(
-                modifier = Modifier
-                    .padding(paddingValues)
-                    .padding(horizontal = 12.dp)
+                modifier =
+                    Modifier
+                        .padding(paddingValues)
+                        .padding(horizontal = 12.dp),
             ) {
-                val radioOptions = listOf(
-                    question.option[0],
-                    question.option[1],
-                    question.option[2],
-                    question.option[3]
-                )
+                val radioOptions =
+                    listOf(
+                        question.option[0],
+                        question.option[1],
+                        question.option[2],
+                        question.option[3],
+                    )
 
                 Text(
                     text = "$currentCount/$numOfQues",
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     IconButton(onClick = {
                         if (currentCount > 1) {
@@ -98,7 +96,7 @@ fun Quiz(
                     }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "previous question"
+                            contentDescription = "previous question",
                         )
                     }
                     Spacer(modifier = Modifier.padding(2.dp))
@@ -106,7 +104,7 @@ fun Quiz(
                         progress = {
                             progress
                         },
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
                     )
                     Spacer(modifier = Modifier.padding(2.dp))
                     IconButton(onClick = {
@@ -116,7 +114,7 @@ fun Quiz(
                     }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                            contentDescription = "next question"
+                            contentDescription = "next question",
                         )
                     }
                 }
@@ -130,38 +128,47 @@ fun Quiz(
                     selectedIndex = quizResult[currentCount] ?: -1,
                     onOptionSelected = { index ->
                         quizResult[currentCount] = index
-                    })
+                    },
+                )
                 Spacer(modifier = Modifier.padding(8.dp))
                 Button(onClick = {
                     if (currentCount < numOfQues) {
                         progress += unit
                     } else {
                         if (quizResult.keys.size != numOfQues) {
-                            val missingAnswer = viewModel.getMissingAnswer(quizResult.keys, numOfQues)
+                            val missingAnswer =
+                                viewModel.getMissingAnswer(quizResult.keys, numOfQues)
                             progress = unit * missingAnswer
-                            Toast.makeText(context,
-                                context.getString(R.string.answer_all_questions, missingAnswer), Toast.LENGTH_SHORT)
-                                .show()
+                            Toast
+                                .makeText(
+                                    context,
+                                    context.getString(R.string.answer_all_questions, missingAnswer),
+                                    Toast.LENGTH_SHORT,
+                                ).show()
                         } else {
                             viewModel.insertQuizResult(
-                                name = name,
-                                number = number,
-                                dob = dob,
-                                quizAnswers = quizResult.toMap()
+                                quizAnswers = quizResult.toMap(),
                             ) { result ->
-                                Toast.makeText(
-                                    context,
-                                    context.getString(R.string.quiz_recorded_successfully),
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                navController.popBackStack(
-                                    Quiz(
-                                        name = name,
-                                        number = number,
-                                        dob = dob
-                                    ), true
-                                )
-                                navController.navigate(Success(result.first))
+                                result?.let {
+                                    Toast
+                                        .makeText(
+                                            context,
+                                            context.getString(R.string.analysis_recorded_successfully),
+                                            Toast.LENGTH_SHORT,
+                                        ).show()
+                                    navController.popBackStack(
+                                        Quiz,
+                                        true,
+                                    )
+                                    navController.navigate(Success(result.first))
+                                } ?: run {
+                                    Toast
+                                        .makeText(
+                                            context,
+                                            context.getString(R.string.analysis_failed),
+                                            Toast.LENGTH_SHORT,
+                                        ).show()
+                                }
                             }
                         }
                     }
@@ -173,7 +180,6 @@ fun Quiz(
                     }
                 }
             }
-        }
+        },
     )
 }
-
